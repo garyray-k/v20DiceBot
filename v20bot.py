@@ -33,30 +33,30 @@ async def on_command_error(ctx, args):
     return
 
 # implement after setDate is done
-@bot.command(description="See the current in game date.")
-async def date(ctx):
-    """Players can use this tool to check the current in game date."""
-    with open("date.txt", "r") as file:
-        currentDate = file.read()
-    await ctx.send(currentDate)
-    return
+# @bot.command(description="See the current in game date.")
+# async def date(ctx):
+#     """Players can use this tool to check the current in game date."""
+#     with open("date.txt", "r") as file:
+#         currentDate = file.read()
+#     await ctx.send(currentDate)
+#     return
 
-#future implementation
-@bot.command(description="Usable by Storyteller only")
-async def setDate(ctx, newMonth:str, newYear:int):
-    """Used by Storyteller to set in game date"""
-    if (ctx.message.author.top_role.name == "Storyteller"):
-        with open("date.txt", "r") as file:
-            currentDate = file.read()
-        oldDate = currentDate
-        currentDate = newMonth + ' ' + str(newYear)
-        open('date.txt', 'w').close()
-        with open("date.txt", "w") as file:
-            file.write(currentDate)
-        await ctx.send("Date was: %s\nDate is now: %s" % (oldDate, currentDate))
-    else:
-        await ctx.send("Only Storytellers can set the date. **Naughty %s!**" % (ctx.message.author.name))
-    return
+# #future implementation
+# @bot.command(description="Usable by Storyteller only")
+# async def setDate(ctx, newMonth:str, newYear:int):
+#     """Used by Storyteller to set in game date"""
+#     if (ctx.message.author.top_role.name == "Storyteller"):
+#         with open("date.txt", "r") as file:
+#             currentDate = file.read()
+#         oldDate = currentDate
+#         currentDate = newMonth + ' ' + str(newYear)
+#         open('date.txt', 'w').close()
+#         with open("date.txt", "w") as file:
+#             file.write(currentDate)
+#         await ctx.send("Date was: %s\nDate is now: %s" % (oldDate, currentDate))
+#     else:
+#         await ctx.send("Only Storytellers can set the date. **Naughty %s!**" % (ctx.message.author.name))
+#     return
 
 @bot.command(description="Rolls a dice pool")
 async def r(ctx, diceCount:int, difficulty:int):
