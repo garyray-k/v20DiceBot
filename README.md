@@ -10,7 +10,7 @@ Create a bot account using the [discord developer section](https://discordapp.co
 Add your bot token in a file called `credentials.py`.
 
 Add the bot to your server using the OAUTH url:
-https://discordapp.com/oauth2/authorize?client_id=BOTCLIENTIDHERE&scope=bot&permissions=0x00002000
+https://discordapp.com/oauth2/authorize?client_id=533125616128753674&scope=bot&permissions=14336
 
 :exclamation: Make sure to insert your bots client ID in the url and add permission level.
 
