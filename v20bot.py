@@ -68,7 +68,7 @@ async def r(ctx, diceCount:int, difficulty:int):
     
     prefix = "Rolled %s for **%s** with difficulty %s. " % (diceCount, ctx.message.author.name, difficulty)
 
-    resultString = calculateSuccess(1, diceCount, difficulty, ctx.message.author.name)
+    resultString = calculateSuccess(False, diceCount, difficulty, ctx.message.author.name)
     await ctx.send(prefix + resultString)
     return
 
@@ -82,18 +82,20 @@ async def s(ctx, diceCount:int, difficulty:int):
     
     prefix = "*Specialty* roll for **%s**, **%s** dice with difficulty **%s**. " % (ctx.message.author.name, diceCount, difficulty)
 
-    resultString = calculateSuccess(2, diceCount, difficulty, ctx.message.author.name)
+    resultString = calculateSuccess(True, diceCount, difficulty, ctx.message.author.name)
     await ctx.send(prefix + resultString)
     return
 
-def calculateSuccess(successValue:int, dCount:int, diff:int, name:str):
+def calculateSuccess(isSepcialty:bool, dCount:int, diff:int, name:str):
     numberSuccesses = 0
     numberFailures = 0
     result = ''
     for r in range(0, dCount): 
             number = random.randint(1, 10)
-            if (number >= diff):
-                numberSuccesses += successValue
+            if (isSepcialty and (number == 10)):
+                numberSuccesses += 2
+            elif (number >= diff):
+                numberSuccesses += 1
             
             if (number == 1):
                 numberFailures += 1
