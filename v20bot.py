@@ -24,7 +24,7 @@ async def on_ready():
 async def on_member_join(member):
     guild = member.guild
     if guild.system_channel is not None:
-        to_send = 'Welcome {0.mention} to {1.name}!'.format(member, guild)
+        to_send = 'Welcome {0.mention} to {1.name}! Check out the test-channel or DM me `!help` for best ways to employ my services. Alternately, you can type `!help` and clutter up this channel as well.'.format(member, guild)
         await guild.system_channel.send(to_send)
 
 @bot.event
