@@ -18,7 +18,7 @@ async def on_ready():
 async def on_member_join(member):
     guild = member.guild
     if guild.system_channel is not None:
-        to_send = 'Welcome {0.name} to {1.name}! Check out the test-channel or DM me `!help` for best ways to employ my services. Alternately, you can type `!help` and clutter up this channel as well.'.format(member, guild)
+        to_send = 'Welcome {0.nick} to {1.name}! Check out the test-channel or DM me `!help` for best ways to employ my services. Alternately, you can type `!help` and clutter up this channel as well.'.format(member, guild)
         await guild.system_channel.send(to_send)
 
 @bot.event
@@ -31,12 +31,12 @@ async def r(ctx, diceCount:int, difficulty:int):
     """Rolls dice using the `!r X Y` format. X=Number of Dice. Y=Difficulty"""
     resultString = ''
     if (diceCount > 25):
-        await ctx.send("You're no Antediluvian, %s." % ctx.message.author.name)
+        await ctx.send("You're no Antediluvian, %s." % ctx.message.author.nick)
         return
     
-    prefix = "Rolled %s for **%s** with difficulty %s. " % (diceCount, ctx.message.author.name, difficulty)
+    prefix = "Rolled %s for **%s** with difficulty %s. " % (diceCount, ctx.message.author.nick, difficulty)
 
-    resultString = calculateSuccess(False, diceCount, difficulty, ctx.message.author.name)
+    resultString = calculateSuccess(False, diceCount, difficulty, ctx.message.author.nick)
     await ctx.send(prefix + resultString)
     return
 
@@ -45,12 +45,12 @@ async def s(ctx, diceCount:int, difficulty:int):
     """Rolls a Specialty roll. Successes are worth two. Uses the same `!s X Y` format."""
     resultString = ''
     if (diceCount > 25):
-        await ctx.send("You're no Antediluvian, %s." % ctx.message.author.name)
+        await ctx.send("You're no Antediluvian, %s." % ctx.message.author.nick)
         return
     
-    prefix = "*Specialty* roll for **%s**, **%s** dice with difficulty **%s**. " % (ctx.message.author.name, diceCount, difficulty)
+    prefix = "*Specialty* roll for **%s**, **%s** dice with difficulty **%s**. " % (ctx.message.author.nick, diceCount, difficulty)
 
-    resultString = calculateSuccess(True, diceCount, difficulty, ctx.message.author.name)
+    resultString = calculateSuccess(True, diceCount, difficulty, ctx.message.author.nick)
     await ctx.send(prefix + resultString)
     return
 
