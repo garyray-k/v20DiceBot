@@ -24,7 +24,7 @@ async def on_ready():
 async def on_member_join(member):
     guild = member.guild
     if guild.system_channel is not None:
-        to_send = 'Welcome {0.mention} to {1.name}! Check out the test-channel or DM me `!help` for best ways to employ my services. Alternately, you can type `!help` and clutter up this channel as well.'.format(member, guild)
+        to_send = 'Welcome {0.nick} to {1.name}! Check out the test-channel or DM me `!help` for best ways to employ my services. Alternately, you can type `!help` and clutter up this channel as well.'.format(member, guild)
         await guild.system_channel.send(to_send)
 
 @bot.event
@@ -32,43 +32,17 @@ async def on_command_error(ctx, args):
     await ctx.send("Command not found. Format is ` !r X Y ` or ` !s X Y `\nEnter ` !help ` for more help.")
     return
 
-# implement after setDate is done
-# @bot.command(description="See the current in game date.")
-# async def date(ctx):
-#     """Players can use this tool to check the current in game date."""
-#     with open("date.txt", "r") as file:
-#         currentDate = file.read()
-#     await ctx.send(currentDate)
-#     return
-
-# #future implementation
-# @bot.command(description="Usable by Storyteller only")
-# async def setDate(ctx, newMonth:str, newYear:int):
-#     """Used by Storyteller to set in game date"""
-#     if (ctx.message.author.top_role.name == "Storyteller"):
-#         with open("date.txt", "r") as file:
-#             currentDate = file.read()
-#         oldDate = currentDate
-#         currentDate = newMonth + ' ' + str(newYear)
-#         open('date.txt', 'w').close()
-#         with open("date.txt", "w") as file:
-#             file.write(currentDate)
-#         await ctx.send("Date was: %s\nDate is now: %s" % (oldDate, currentDate))
-#     else:
-#         await ctx.send("Only Storytellers can set the date. **Naughty %s!**" % (ctx.message.author.name))
-#     return
-
 @bot.command(description="Rolls a dice pool")
 async def r(ctx, diceCount:int, difficulty:int):
     """Rolls dice using the `!r X Y` format. X=Number of Dice. Y=Difficulty"""
     resultString = ''
     if (diceCount > 25):
-        await ctx.send("You're no Antediluvian, %s." % ctx.message.author.name)
+        await ctx.send("You're no Antediluvian, %s." % ctx.message.author.nick)
         return
     
-    prefix = "Rolled %s for **%s** with difficulty %s. " % (diceCount, ctx.message.author.name, difficulty)
+    prefix = "Rolled %s for **%s** with difficulty %s. " % (diceCount, ctx.message.author.nick, difficulty)
 
-    resultString = calculateSuccess(False, diceCount, difficulty, ctx.message.author.name)
+    resultString = calculateSuccess(False, diceCount, difficulty, ctx.message.author.nick)
     await ctx.send(prefix + resultString)
     return
 
@@ -77,16 +51,16 @@ async def s(ctx, diceCount:int, difficulty:int):
     """Rolls a Specialty roll. Successes are worth two. Uses the same `!s X Y` format."""
     resultString = ''
     if (diceCount > 25):
-        await ctx.send("You're no Antediluvian, %s." % ctx.message.author.name)
+        await ctx.send("You're no Antediluvian, %s." % ctx.message.author.nick)
         return
     
-    prefix = "*Specialty* roll for **%s**, **%s** dice with difficulty **%s**. " % (ctx.message.author.name, diceCount, difficulty)
+    prefix = "*Specialty* roll for **%s**, **%s** dice with difficulty **%s**. " % (ctx.message.author.nick, diceCount, difficulty)
 
-    resultString = calculateSuccess(True, diceCount, difficulty, ctx.message.author.name)
+    resultString = calculateSuccess(True, diceCount, difficulty, ctx.message.author.nick)
     await ctx.send(prefix + resultString)
     return
 
-def calculateSuccess(isSepcialty:bool, dCount:int, diff:int, name:str):
+def calculateSuccess(isSepcialty:bool, dCount:int, diff:int, nick:str):
     numberSuccesses = 0
     numberFailures = 0
     result = ''
@@ -108,10 +82,10 @@ def calculateSuccess(isSepcialty:bool, dCount:int, diff:int, name:str):
     resultFinal = "*(%s)* Successes: **%d**" % (result, (numberSuccesses - numberFailures))
 
     if(numberSuccesses > numberFailures):
-        return "%s\n:white_check_mark: Success! Good job **%s**!" % (resultFinal, name)
+        return "%s\n:white_check_mark: Success! Good job **%s**!" % (resultFinal, nick)
     elif(numberFailures > numberSuccesses):
-        return "%s\n:skull: Oh shit, **%s BOTCHED**!" % (resultFinal, name)
+        return "%s\n:skull: Oh shit, **%s BOTCHED**!" % (resultFinal, nick)
     elif(numberSuccesses == numberFailures):
-        return "%s\n:x: **%s** failed!" % (resultFinal, name)
+        return "%s\n:x: **%s** failed!" % (resultFinal, nick)
 
 bot.run(credentials.token)
