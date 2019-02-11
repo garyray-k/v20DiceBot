@@ -30,13 +30,14 @@ async def on_command_error(ctx, args):
 async def r(ctx, diceCount:int, difficulty:int):
     """Rolls dice using the `!r X Y` format. X=Number of Dice. Y=Difficulty"""
     resultString = ''
+
     if (diceCount > 25):
-        await ctx.send("You're no Antediluvian, %s." % ctx.message.author.nick)
+        await ctx.send("You're no Antediluvian, %s." % (ctx.author.display_name))
         return
     
-    prefix = "Rolled %s for **%s** with difficulty %s. " % (diceCount, ctx.message.author.nick, difficulty)
+    prefix = "Rolled %s for **%s** with difficulty %s. " % (diceCount, ctx.author.display_name, difficulty)
 
-    resultString = calculateSuccess(False, diceCount, difficulty, ctx.message.author.nick)
+    resultString = calculateSuccess(False, diceCount, difficulty, ctx.author.display_name)
     await ctx.send(prefix + resultString)
     return
 
@@ -44,13 +45,14 @@ async def r(ctx, diceCount:int, difficulty:int):
 async def s(ctx, diceCount:int, difficulty:int):
     """Rolls a Specialty roll. Successes are worth two. Uses the same `!s X Y` format."""
     resultString = ''
+
     if (diceCount > 25):
-        await ctx.send("You're no Antediluvian, %s." % ctx.message.author.nick)
+        await ctx.send("You're no Antediluvian, %s." % ctx.author.display_name)
         return
     
-    prefix = "*Specialty* roll for **%s**, **%s** dice with difficulty **%s**. " % (ctx.message.author.nick, diceCount, difficulty)
+    prefix = "*Specialty* roll for **%s**, **%s** dice with difficulty **%s**. " % (ctx.author.display_name, diceCount, difficulty)
 
-    resultString = calculateSuccess(True, diceCount, difficulty, ctx.message.author.nick)
+    resultString = calculateSuccess(True, diceCount, difficulty, ctx.author.display_name)
     await ctx.send(prefix + resultString)
     return
 

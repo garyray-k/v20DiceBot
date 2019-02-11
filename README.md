@@ -2,9 +2,10 @@
 Vampire the Masquerade rolling bot for discord written in python.
 
 ## Requirements
-This bot uses the [discord.py rewrite API wrapper](https://github.com/Rapptz/discord.py), you'll need to set that up for this bot to work. Be sure to use the 'rewrite' branch.
+This bot uses the [discord.py rewrite API wrapper](https://github.com/Rapptz/discord.py), you'll need to set that up for this bot to work. Be sure to use the 'rewrite' branch. (pip install -U git+https://github.com/Rapptz/discord.py@rewrite#egg=discord.py)
 
 Create a bot account using the [discord developer section](https://discordapp.com/developers/applications/me)
+
 
 ## Usage
 Add your bot token in a file called `credentials.py`.
