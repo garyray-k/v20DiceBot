@@ -14,17 +14,11 @@ async def on_ready():
     print(bot.user.id)
     print('------')
 
-# Ignoring exception in on_member_join
-# Traceback (most recent call last):
-#   File "/usr/local/lib/python3.7/site-packages/discord/client.py", line 227, in _run_event
-#     await coro(*args, **kwargs)
-# TypeError: on_member_join() missing 1 required positional argument: 'member'
-
 @bot.event
 async def on_member_join(member):
     guild = member.guild
     if guild.system_channel is not None:
-        to_send = 'Welcome {0.nick} to {1.name}! Check out the test-channel or DM me `!help` for best ways to employ my services. Alternately, you can type `!help` and clutter up this channel as well.'.format(member, guild)
+        to_send = 'Welcome {0.name} to {1.name}! Check out the test-channel or DM me `!help` for best ways to employ my services. Alternately, you can type `!help` and clutter up this channel as well.'.format(member, guild)
         await guild.system_channel.send(to_send)
 
 @bot.event
@@ -37,12 +31,12 @@ async def r(ctx, diceCount:int, difficulty:int):
     """Rolls dice using the `!r X Y` format. X=Number of Dice. Y=Difficulty"""
     resultString = ''
     if (diceCount > 25):
-        await ctx.send("You're no Antediluvian, %s." % ctx.message.author.nick)
+        await ctx.send("You're no Antediluvian, %s." % ctx.message.author.name)
         return
     
-    prefix = "Rolled %s for **%s** with difficulty %s. " % (diceCount, ctx.message.author.nick, difficulty)
+    prefix = "Rolled %s for **%s** with difficulty %s. " % (diceCount, ctx.message.author.name, difficulty)
 
-    resultString = calculateSuccess(False, diceCount, difficulty, ctx.message.author.nick)
+    resultString = calculateSuccess(False, diceCount, difficulty, ctx.message.author.name)
     await ctx.send(prefix + resultString)
     return
 
@@ -51,16 +45,16 @@ async def s(ctx, diceCount:int, difficulty:int):
     """Rolls a Specialty roll. Successes are worth two. Uses the same `!s X Y` format."""
     resultString = ''
     if (diceCount > 25):
-        await ctx.send("You're no Antediluvian, %s." % ctx.message.author.nick)
+        await ctx.send("You're no Antediluvian, %s." % ctx.message.author.name)
         return
     
-    prefix = "*Specialty* roll for **%s**, **%s** dice with difficulty **%s**. " % (ctx.message.author.nick, diceCount, difficulty)
+    prefix = "*Specialty* roll for **%s**, **%s** dice with difficulty **%s**. " % (ctx.message.author.name, diceCount, difficulty)
 
-    resultString = calculateSuccess(True, diceCount, difficulty, ctx.message.author.nick)
+    resultString = calculateSuccess(True, diceCount, difficulty, ctx.message.author.name)
     await ctx.send(prefix + resultString)
     return
 
-def calculateSuccess(isSepcialty:bool, dCount:int, diff:int, nick:str):
+def calculateSuccess(isSepcialty:bool, dCount:int, diff:int, name:str):
     numberSuccesses = 0
     numberFailures = 0
     result = ''
@@ -82,10 +76,10 @@ def calculateSuccess(isSepcialty:bool, dCount:int, diff:int, nick:str):
     resultFinal = "*(%s)* Successes: **%d**" % (result, (numberSuccesses - numberFailures))
 
     if(numberSuccesses > numberFailures):
-        return "%s\n:white_check_mark: Success! Good job **%s**!" % (resultFinal, nick)
+        return "%s\n:white_check_mark: Success! Good job **%s**!" % (resultFinal, name)
     elif(numberFailures > numberSuccesses):
-        return "%s\n:skull: Oh shit, **%s BOTCHED**!" % (resultFinal, nick)
+        return "%s\n:skull: Oh shit, **%s BOTCHED**!" % (resultFinal, name)
     elif(numberSuccesses == numberFailures):
-        return "%s\n:x: **%s** failed!" % (resultFinal, nick)
+        return "%s\n:x: **%s** failed!" % (resultFinal, name)
 
 bot.run(credentials.token)
