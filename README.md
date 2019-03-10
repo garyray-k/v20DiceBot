@@ -21,5 +21,5 @@ Roll dice using `!r 4 5` or `!s 4 5` where the first number is dice pool and the
 ### Extra bits
 Thanks to Rapptz for the discord.py wrapper.
 
-Join my [test server](https://discord.gg/pDPSv6G) for requests! 
+Send me a message on Twitter, [@GaryRKrause1](https://twitter.com/GaryRKrause1)!
 
