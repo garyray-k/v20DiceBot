@@ -79,9 +79,9 @@ def calculateSuccess(isSepcialty:bool, dCount:int, diff:int, name:str):
 
     if(numberSuccesses > numberFailures):
         return "%s\n:white_check_mark: Success! Good job **%s**!" % (resultFinal, name)
-    elif(numberFailures > numberSuccesses):
+    elif(numberFailures > numberSuccesses && numberSuccesses == 0):
         return "%s\n:skull: Oh shit, **%s BOTCHED**!" % (resultFinal, name)
-    elif(numberSuccesses == numberFailures):
+    elif(numberSuccesses <= numberFailures):
         return "%s\n:x: **%s** failed!" % (resultFinal, name)
 
 bot.run(credentials.token)
